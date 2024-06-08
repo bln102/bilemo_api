@@ -19,7 +19,11 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-    # App/OpenApi/JwtDecorator:
+    App\Doctrine\CurrentUserExtension:
+        tags:
+            - { name: api_platform.doctrine.orm.query_extension.collection }
+            - { name: api_platform.doctrine.orm.query_extension.item }
+    # "App/OpenApi/JwtDecorator":
     #     decorates: 'api_platform.openapi.factory'
     #     arguments: ['@.inner']
 
