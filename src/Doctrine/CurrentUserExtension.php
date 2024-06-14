@@ -38,6 +38,6 @@ final readonly class CurrentUserExtension implements QueryCollectionExtensionInt
 
         $rootAlias = $queryBuilder->getRootAliases()[0];
         $queryBuilder->andWhere(sprintf('%s.user = :current_user', $rootAlias));
-        $queryBuilder->setParameter('current_user', $user["@id"]);
+        $queryBuilder->setParameter('current_user', $user->getId());
     }
 }

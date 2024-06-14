@@ -19,13 +19,21 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
     App\Doctrine\CurrentUserExtension:
         tags:
             - { name: api_platform.doctrine.orm.query_extension.collection }
             - { name: api_platform.doctrine.orm.query_extension.item }
-    # "App/OpenApi/JwtDecorator":
-    #     decorates: 'api_platform.openapi.factory'
-    #     arguments: ['@.inner']
+
+
+    App\EventListener\UtilisateurEventListener:
+        tags:
+            -
+                # these are the options required to define the entity listener
+                name: 'doctrine.orm.entity_listener'
+                event: 'prePersist'
+                entity: 'App\Entity\Utilisateur' 
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
