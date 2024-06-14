@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Doctrine\Odm\Filter\SearchFilter;
-use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use App\Repository\UtilisateurRepository;
@@ -12,15 +10,22 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 #[ApiResource(
+    normalizationContext: ['groups' => ['utilisateur.read']],
     operations: [
         new Get(),
-        new GetCollection(),
-        new Post(),
+        new GetCollection(
+  
+        ),
+        new Post(
+        ),
         new Delete()
-    ]
+    ],
 )]
 class Utilisateur
 {
@@ -30,23 +35,50 @@ class Utilisateur
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[
+        Assert\NotBlank,
+        Groups(['utilisateur.read'])
+    ]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[
+        Assert\NotBlank,
+        Groups(['utilisateur.read'])
+    ]
     private ?string $prenom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[
+        Assert\NotBlank,
+        Groups(['utilisateur.read'])
+    ]
     private ?\DateTimeInterface $dateNaiss = null;
 
     #[ORM\Column(length: 255)]
+    #[
+        Assert\NotBlank,
+        Groups(['utilisateur.read'])
+    ]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 255)]
+    #[
+        Assert\NotBlank,
+        Groups(['utilisateur.read'])
+    ]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[
+        Assert\NotBlank,
+        Groups(['utilisateur.read'])
+    ]
     private ?int $telephone = null;
 
+    #[
+        Groups(['utilisateur.read'])
+    ]
     #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
     private ?User $user = null;
 
