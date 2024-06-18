@@ -65,6 +65,7 @@ class Utilisateur
     #[ORM\Column(length: 255)]
     #[
         Assert\NotBlank,
+        Assert\Unique,
         Groups(['utilisateur.read'])
     ]
     private ?string $email = null;
