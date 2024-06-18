@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,6 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete()
     ],
 )]
+#[UniqueEntity('email', message: "Cet e-mail est associé à un autre utilisateur",)]
 class Utilisateur
 {
     #[ORM\Id]
@@ -62,10 +63,9 @@ class Utilisateur
     ]
     private ?string $adresse = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[
         Assert\NotBlank,
-        Assert\Unique,
         Groups(['utilisateur.read'])
     ]
     private ?string $email = null;
@@ -81,7 +81,7 @@ class Utilisateur
         Groups(['utilisateur.read'])
     ]
     #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
-    private ?User $user = null;
+    private ?Client $client = null;
 
     public function getId(): ?int
     {
@@ -160,14 +160,14 @@ class Utilisateur
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getClient(): ?Client
     {
-        return $this->user;
+        return $this->client;
     }
 
-    public function setUser(?User $user): static
+    public function setClient(?Client $client): static
     {
-        $this->user = $user;
+        $this->client = $client;
 
         return $this;
     }

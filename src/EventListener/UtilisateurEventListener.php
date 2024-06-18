@@ -4,9 +4,7 @@
 
 namespace App\EventListener;
 
-use App\Entity\User;
 use App\Entity\Utilisateur;
-use App\Repository\UserRepository;
 use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 
@@ -24,7 +22,6 @@ class UtilisateurEventListener
 
     public function prePersist(Utilisateur $utilisateur): void
     {
-        $user = $this->security->getUser();
-        $utilisateur->setUser($user);
+        $utilisateur->setClient($this->security->getUser());
     }
 }
