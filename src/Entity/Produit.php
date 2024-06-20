@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 
 #[ApiResource(
+    paginationItemsPerPage: 5,
     operations: [
         new Get(),
         new GetCollection()
